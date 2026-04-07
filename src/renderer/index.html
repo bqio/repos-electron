@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Repos</title>
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src * 'unsafe-inline' 'unsafe-eval' data: blob: filesystem:; 
+               connect-src * https: http: ws: wss: data: blob: filesystem:; 
+               script-src * 'unsafe-inline' 'unsafe-eval' data: blob:; 
+               style-src * 'unsafe-inline'; 
+               img-src * data: blob:;"
+    />
+    <meta
+      http-equiv="X-Content-Security-Policy"
+      content="default-src * 'unsafe-inline' 'unsafe-eval' data: blob: filesystem:; 
+               connect-src * https: http: ws: wss: data: blob: filesystem:; 
+               script-src * 'unsafe-inline' 'unsafe-eval' data: blob:; 
+               style-src * 'unsafe-inline'; 
+               img-src * data: blob:;"
+    />
+  </head>
+
+  <body class="dark">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
