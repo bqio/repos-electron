@@ -19,9 +19,9 @@ export async function createAppContext(WebTorrentClass: typeof WebTorrent): Prom
     }
   })
   const mainWindow = new BrowserWindow({
-    width: 1000,
+    width: 1200,
     height: 720,
-    minWidth: 1000,
+    minWidth: 1200,
     minHeight: 720,
     show: false,
     autoHideMenuBar: true,

@@ -4,12 +4,17 @@ import { StatsCard } from '@renderer/components/StatsCard'
 import { TorrentCard } from '@renderer/components/TorrentCard'
 import { Button } from '@renderer/components/ui/button'
 import { Input } from '@renderer/components/ui/input'
+import { useRepoStore } from '@renderer/stores/repo'
 import { Torrent, type WebClientTorrent } from '@shared/types'
+import { getInfoHashFromMagnet } from '@shared/utils'
 import { ipc } from '@shared/vars'
 import { ArrowDown, ArrowUp, FolderOpen } from 'lucide-react'
 import { useEffect, useState, useMemo } from 'react'
 
 export function DownloadsPage(): React.JSX.Element {
+  const repoId = useRepoStore((s) => s.repository)
+  const repositories = useRepoStore((s) => s.repositories)
+  const repository = repositories.find((r) => r.id === repoId)
   const [isLoading, setIsLoading] = useState(true)
   const [isDebug] = useState(false)
   const [inputMagnet, setInputMagnet] = useState(
@@ -34,10 +39,21 @@ export function DownloadsPage(): React.JSX.Element {
   }
 
   useEffect(() => {
+    function getPoster(magnetURI: string): string {
+      // Проверяем, что repository и items существуют
+      if (!repository?.items) return ''
+
+      const item = repository.items.find((i) => {
+        return getInfoHashFromMagnet(i.magnetURI) === getInfoHashFromMagnet(magnetURI)
+      })
+
+      return item?.poster ?? '' // безопасное возвращение
+    }
+
     function handler(_: unknown, webTorrents: WebClientTorrent[]): void {
       const mapped: Torrent[] = webTorrents.map((t) => ({
         ...t,
-        poster: 'https://images.vfl.ru/ii/1579891604/67e7f086/29313143.png'
+        poster: getPoster(t.magnetURI!)
       }))
 
       setTorrents(mapped)
@@ -49,7 +65,7 @@ export function DownloadsPage(): React.JSX.Element {
     return () => {
       renderer.removeAllListeners(ipc.torrentUpdate)
     }
-  }, [renderer])
+  }, [renderer, repository])
 
   const totalDownloadSpeed = useMemo(() => {
     return torrents.reduce((sum, t) => sum + t.downloadSpeed, 0)

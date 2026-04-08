@@ -10,13 +10,16 @@ import { SettingsPage } from '@renderer/pages/SettingsPage'
 import { useSettingsStore } from '@renderer/stores/settings'
 import { useEffect } from 'react'
 import { Toaster } from '@renderer/components/ui/sonner'
+import { useRepoStore } from '@renderer/stores/repo'
 
 function App(): React.JSX.Element {
   const initSettings = useSettingsStore((s) => s.init)
+  const initRepos = useRepoStore((s) => s.init)
 
   useEffect(() => {
     initSettings()
-  }, [initSettings])
+    initRepos()
+  }, [initSettings, initRepos])
   return (
     <TooltipProvider>
       <SidebarProvider defaultOpen={false}>

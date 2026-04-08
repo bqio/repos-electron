@@ -8,15 +8,18 @@ import {
 } from '@renderer/components/ui/dialog'
 import { Field, FieldGroup } from '@renderer/components/ui/field'
 import { Input } from '@renderer/components/ui/input'
+import { useRepoStore } from '@renderer/stores/repo'
 import { Repository } from '@shared/types'
 import { Plus, Upload } from 'lucide-react'
 import { useRef, useState, type ChangeEvent } from 'react'
 import { toast } from 'sonner'
 import { z, ZodError } from 'zod'
+import { v4 } from 'uuid'
 
 export default function ImportRepoDialog() {
-  //const t = useTranslation()
-  //const repoState = useRepositoryStore()
+  const repoIsExists = useRepoStore((s) => s.repoIsExists)
+  const setRepo = useRepoStore((s) => s.setRepo)
+  const pushRepo = useRepoStore((s) => s.pushRepo)
 
   const [repoUrl, setRepoUrl] = useState<string>('')
   const [dialogIsOpen, setDialogIsOpen] = useState<boolean>(false)
@@ -87,22 +90,19 @@ export default function ImportRepoDialog() {
       const raw_repository = RepositorySchema.parse(rawData)
       const repository: Repository = {
         ...raw_repository,
+        id: v4(),
         type: 'remote',
         url: repoUrl
       }
 
-      console.log(repository)
+      if (repoIsExists(repository)) {
+        toast.info('Repository already exists')
+        setIsLoading(false)
+        return
+      }
 
-      //   if (repoState.isExistsRepository(repository)) {
-      //     toast.info(t['importRepoExists'])
-      //     inputURLRef.current?.focus()
-      //     setRepoUrl('')
-      //     setIsLoading(false)
-      //     return
-      //   }
-
-      //   repoState.setCurrentRepository(repository)
-      //   repoState.pushRepository(repository)
+      setRepo(repository.id)
+      pushRepo(repository)
 
       toast.success('Repository imported')
       setDialogIsOpen(false)
@@ -162,19 +162,19 @@ export default function ImportRepoDialog() {
         const raw_repository = RepositorySchema.parse(rawData)
         const repository: Repository = {
           ...raw_repository,
+          id: v4(),
           type: 'local',
           url: undefined
         }
 
-        console.log(repository)
+        if (repoIsExists(repository)) {
+          toast.info('Repository already exists')
+          setIsLoading(false)
+          return
+        }
 
-        // if (repoState.isExistsRepository(repository)) {
-        //   toast.info(t['importRepoExists'])
-        //   return
-        // }
-
-        //repoState.setCurrentRepository(repository)
-        //repoState.pushRepository(repository)
+        setRepo(repository.id)
+        pushRepo(repository)
 
         toast.success('Repository imported')
       } catch (error) {

@@ -51,6 +51,7 @@ export type RepositoryItem = {
 export type RepoType = 'local' | 'remote'
 
 export type Repository = {
+  id: string
   name: string
   version: string
   description: string
@@ -61,6 +62,7 @@ export type Repository = {
 }
 
 export type Storage = {
+  repository: string | null
   repositories: Repository[]
   favorites: RepositoryItem[]
   downloading: DownloadingItem[]

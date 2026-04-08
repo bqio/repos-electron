@@ -79,6 +79,8 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  --scrollbar-bg: oklch(1 0 0);
+  --scrollbar-thumb: oklch(0.708 0 0);
 }
 
 .dark {
@@ -113,6 +115,8 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+  --scrollbar-bg: oklch(0.145 0 0);
+  --scrollbar-thumb: oklch(0.556 0 0);
 }
 
 @layer base {
@@ -127,4 +131,20 @@
   [role='button']:not(:disabled) {
     cursor: pointer;
   }
+}
+
+* {
+  --sb-track-color: var(--scrollbar-bg);
+  --sb-thumb-color: var(--scrollbar-thumb);
+  --sb-size: 14px;
+}
+
+*::-webkit-scrollbar {
+  width: var(--sb-size);
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb-color);
+  border-radius: 9px;
+  border: 4px solid var(--sb-track-color);
 }

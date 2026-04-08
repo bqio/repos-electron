@@ -1,4 +1,4 @@
-import { DownloadingItem, Settings, Storage } from '@shared/types'
+import { DownloadingItem, Repository, Settings, Storage } from '@shared/types'
 import { getInfoHashFromMagnet } from '@shared/utils'
 import { app, shell } from 'electron'
 import { Low } from 'lowdb'
@@ -14,6 +14,7 @@ export class StorageService {
 
   static async create(): Promise<StorageService> {
     const defaultData: Storage = {
+      repository: null,
       downloading: [],
       repositories: [],
       favorites: [],
@@ -46,9 +47,29 @@ export class StorageService {
     return this.storage.data.settings
   }
 
+  getRepos(): Repository[] {
+    return this.storage.data.repositories
+  }
+
+  getRepo(): string | null {
+    return this.storage.data.repository
+  }
+
   async setSettings(settings: Settings) {
     await this.storage.update((data) => {
       data.settings = settings
+    })
+  }
+
+  async setRepo(id: string) {
+    await this.storage.update((data) => {
+      data.repository = id
+    })
+  }
+
+  async pushRepo(repo: Repository) {
+    await this.storage.update((data) => {
+      data.repositories.push(repo)
     })
   }
 
