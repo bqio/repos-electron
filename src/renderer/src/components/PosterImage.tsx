@@ -1,7 +1,6 @@
 import { Skeleton } from '@renderer/components/ui/skeleton'
+import { CloudOff } from 'lucide-react'
 import { useState, useEffect, useRef } from 'react'
-
-const LOAD_TIMEOUT = 5000
 
 interface PosterImageProps {
   src?: string
@@ -24,7 +23,6 @@ export function PosterImage({ src, alt, className = '' }: PosterImageProps) {
     const img = imgRef.current
 
     if (img && img.complete && img.naturalWidth > 0) {
-      // картинка уже в кэше
       setIsLoaded(true)
     }
   }, [src])
@@ -32,15 +30,17 @@ export function PosterImage({ src, alt, className = '' }: PosterImageProps) {
   if (!src || hasError) {
     return (
       <div className="relative w-full h-full">
-        <div className="w-full h-full flex items-center justify-center bg-muted rounded-lg">
-          <span className="text-muted-foreground text-sm">No image</span>
+        <div className="flex h-full items-center justify-center bg-muted rounded-lg">
+          <span className="text-muted-foreground text-sm">
+            <CloudOff />
+          </span>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="relative w-full h-full">
+    <div className="relative h-full w-full">
       {!isLoaded && <Skeleton className="absolute inset-0 w-full h-full rounded-lg" />}
 
       <img

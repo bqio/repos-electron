@@ -3,6 +3,13 @@ import { BrowserWindow } from 'electron/main'
 import { join } from 'node:path'
 import icon from '../../../resources/icon.png?asset'
 import WebTorrent from 'webtorrent'
+import fs from 'node:fs/promises'
+
+async function getVersion(): Promise<string> {
+  const contents = await fs.readFile(join(__dirname, '../../package.json'), { encoding: 'utf-8' })
+  const data = JSON.parse(contents)
+  return data['version']
+}
 
 export async function createAppContext(WebTorrentClass: typeof WebTorrent): Promise<AppContext> {
   const client = new WebTorrentClass({
@@ -18,7 +25,9 @@ export async function createAppContext(WebTorrentClass: typeof WebTorrent): Prom
       ]
     }
   })
+  const version = await getVersion()
   const mainWindow = new BrowserWindow({
+    title: `Repos ${version}`,
     width: 1200,
     height: 720,
     minWidth: 1200,

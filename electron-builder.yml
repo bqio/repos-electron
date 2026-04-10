@@ -1,18 +1,19 @@
-appId: com.electron.app
-productName: repos-electron
+appId: fun.repos.app
+productName: Repos
 directories:
   buildResources: build
 files:
   - '!**/.vscode/*'
   - '!src/*'
   - '!electron.vite.config.{js,ts,mjs,cjs}'
-  - '!{.eslintcache,eslint.config.mjs,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}'
+  - '!{.gitignore,.editorconfig,.eslintcache,eslint.config.mjs,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}'
   - '!{.env,.env.*,.npmrc,pnpm-lock.yaml}'
   - '!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}'
+  - '!{components.json,package-lock.json}'
 asarUnpack:
   - resources/**
 win:
-  executableName: repos-electron
+  executableName: repos
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}

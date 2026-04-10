@@ -1,6 +1,6 @@
-# repos-electron
+# Repos
 
-An Electron application with React and TypeScript
+Repository manager for your purpose
 
 ## Recommended IDE Setup
 

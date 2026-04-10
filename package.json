@@ -1,10 +1,10 @@
 {
-  "name": "repos-electron",
-  "version": "1.0.0",
-  "description": "An Electron application with React and TypeScript",
+  "name": "repos",
+  "version": "2.0.0",
+  "description": "Repository manager for your purpose",
   "main": "./out/main/index.js",
-  "author": "example.com",
-  "homepage": "https://electron-vite.org",
+  "author": "bqio",
+  "homepage": "repos.fun",
   "scripts": {
     "format": "prettier --write .",
     "lint": "eslint --cache .",
@@ -23,11 +23,6 @@
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.2",
     "@electron-toolkit/utils": "^4.0.0",
-    "@tailwindcss/vite": "^4.2.2",
-    "@types/bittorrent-protocol": "^3.1.7",
-    "@types/parse-torrent": "^5.8.8",
-    "@types/simple-peer": "^9.11.9",
-    "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "electron-updater": "^6.3.9",
     "lowdb": "^7.0.1",
@@ -45,6 +40,11 @@
     "zustand": "^5.0.12"
   },
   "devDependencies": {
+    "@tailwindcss/vite": "^4.2.2",
+    "@types/bittorrent-protocol": "^3.1.7",
+    "@types/parse-torrent": "^5.8.8",
+    "@types/simple-peer": "^9.11.9",
+    "class-variance-authority": "^0.7.1",
     "@electron-toolkit/eslint-config-prettier": "^3.0.0",
     "@electron-toolkit/eslint-config-ts": "^3.1.0",
     "@electron-toolkit/tsconfig": "^2.0.0",

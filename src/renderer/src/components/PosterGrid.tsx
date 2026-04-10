@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback, useMemo, memo } from 'react'
 import { PosterImage } from '@renderer/components/PosterImage'
-import { Eye, File, Calendar, Link, Hash, Download } from 'lucide-react'
+import { File, Calendar, Hash, Download } from 'lucide-react'
 import { Skeleton } from '@renderer/components/ui/skeleton'
 import { Button } from '@renderer/components/ui/button'
 import { Separator } from '@renderer/components/ui/separator'
@@ -15,7 +15,7 @@ interface PosterGridProps {
   items: RepositoryItem[]
 }
 
-const ITEMS_PER_PAGE = 36
+const ITEMS_PER_PAGE = 35
 
 // Выносим форматтеры за компонент
 const formatFileSize = (bytes: number): string => {
@@ -68,30 +68,13 @@ const PosterItem = memo(
     const handleClick = useCallback(() => onItemClick(item), [item, onItemClick])
 
     return (
-      <div className="group cursor-pointer" onClick={handleClick}>
-        <div className="relative mb-2 overflow-hidden rounded-lg">
-          <div className="transform transition-transform duration-700">
-            <PosterImage src={item.poster} alt={item.title} />
-          </div>
+      <div className="cursor-pointer flex flex-col gap-2" onClick={handleClick}>
+        <PosterImage src={item.poster} alt={item.title} />
 
-          <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <div className="absolute inset-0 shadow-[0_0_50px_rgba(59,130,246,0.3)]" />
-          </div>
-
-          <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-2 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
-            <div className="flex items-center justify-between text-white/80 text-xs">
-              {item.size ? <span>{formatFileSize(item.size)}</span> : <span>—</span>}
-              <span className="flex items-center gap-1">
-                <Eye className="w-3 h-3" />
-                <span className="hidden sm:inline">Details</span>
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <h3 className="text-sm font-medium truncate text-foreground px-1" title={item.title}>
+        <h3
+          className="text-sm font-medium truncate text-foreground px-1 mt-auto"
+          title={item.title}
+        >
           {item.title}
         </h3>
       </div>
@@ -130,6 +113,7 @@ export function PosterGrid({ items }: PosterGridProps) {
 
   const handleItemDownloadClick = useCallback(
     (item: RepositoryItem): void => {
+      setDialogOpen(false)
       toast.success(`Downloading ${item.title}...`)
       renderer.send(ipc.torrentAdd, item.magnetURI)
     },
@@ -209,7 +193,7 @@ export function PosterGrid({ items }: PosterGridProps) {
 
   return (
     <>
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(140px,1fr))] gap-6">
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(130px,1fr))] gap-6">
         {displayedItems.map((item) => (
           <PosterItem
             key={getInfoHashFromMagnet(item.magnetURI)}
@@ -239,12 +223,10 @@ export function PosterGrid({ items }: PosterGridProps) {
           >
             <div className="grid grid-cols-12">
               <div className="bg-muted/30 p-8 flex items-center justify-center col-span-4">
-                <div className="w-150">
-                  <PosterImage src={selectedItem.poster} alt={selectedItem.title} />
-                </div>
+                <PosterImage src={selectedItem.poster} alt={selectedItem.title} />
               </div>
 
-              <div className="p-6 col-span-8">
+              <div className="p-6 col-span-8 flex flex-col">
                 <DialogHeader className="text-left p-0">
                   <DialogTitle
                     className="text-md font-semibold leading-tight truncate max-w-sm"
@@ -257,10 +239,6 @@ export function PosterGrid({ items }: PosterGridProps) {
                 <Separator className="my-4" />
 
                 <div className="space-y-1">
-                  {selectedItem.magnetURI && (
-                    <InfoRow icon={Link} label="Tracker" value="Tracker" />
-                  )}
-
                   {selectedItem.size && (
                     <InfoRow icon={File} label="Size" value={formatFileSize(selectedItem.size)} />
                   )}
@@ -273,16 +251,22 @@ export function PosterGrid({ items }: PosterGridProps) {
                     />
                   )}
 
-                  {selectedItem.magnetURI && <InfoRow icon={Hash} label="Magnet" value="Magnet" />}
+                  {selectedItem.magnetURI && (
+                    <InfoRow
+                      icon={Hash}
+                      label="Hash"
+                      value={getInfoHashFromMagnet(selectedItem.magnetURI)!}
+                    />
+                  )}
                 </div>
 
-                <div className="mt-6 flex justify-end">
+                <div className="flex justify-end mt-auto">
                   <ButtonGroup>
-                    <Button variant="default" onClick={() => handleItemDownloadClick(selectedItem)}>
+                    <Button variant="outline" onClick={() => handleItemDownloadClick(selectedItem)}>
                       <Download />
                       Download
                     </Button>
-                    <Button variant="default" disabled>
+                    <Button variant="outline" disabled>
                       <Download />
                       Like
                     </Button>

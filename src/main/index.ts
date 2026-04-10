@@ -6,7 +6,7 @@ import { registerTorrentIpc } from '@main/ipc/torrent'
 import { registerStorageIpc } from '@main/ipc/storage'
 import { registerWindowIpc } from '@main/ipc/window'
 
-const APP_USER_MODEL_ID = 'ru.repos.app'
+const APP_USER_MODEL_ID = 'fun.repos.app'
 
 app
   .whenReady()
