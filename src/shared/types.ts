@@ -46,6 +46,7 @@ export type RepositoryItem = {
   poster: string
   size: number
   published_date: number
+  screenshots?: string[]
 }
 
 export type RepoType = 'local' | 'remote'

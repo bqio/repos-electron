@@ -50,7 +50,7 @@ export function PosterImage({ src, alt, className = '' }: PosterImageProps) {
         onLoad={() => setIsLoaded(true)}
         onError={() => setHasError(true)}
         className={`
-          w-full h-full object-cover rounded-lg
+          w-full object-cover rounded-lg
           transition-opacity duration-300
           ${!isLoaded ? 'opacity-0' : 'opacity-100'}
           ${className}

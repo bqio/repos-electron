@@ -1,6 +1,7 @@
 import { ItemsSearch } from '@renderer/components/ItemsSearch'
 import { ItemsSort } from '@renderer/components/ItemsSort'
 import { PosterGrid } from '@renderer/components/PosterGrid'
+import { RepoInfo } from '@renderer/components/RepoInfo'
 import { Repository } from '@shared/types'
 import { useMemo, useState } from 'react'
 
@@ -13,7 +14,8 @@ export function RepoViewer(props: RepoViewerProps): React.JSX.Element {
   const [sortValue, setSortValue] = useState<string>('date')
   const [reverseValue, setReverseValue] = useState<boolean>(false)
 
-  const items = props.repository.items
+  const repository = props.repository
+  const items = repository.items
 
   const filteredAndSortedItems = useMemo(() => {
     let result = [...items]
@@ -45,11 +47,11 @@ export function RepoViewer(props: RepoViewerProps): React.JSX.Element {
   }, [items, searchQuery, sortValue, reverseValue])
 
   return (
-    <div className="p-6 grid grid-cols-12">
-      <main className="col-span-9 mr-6">
+    <div className="p-6 grid grid-cols-12 gap-6">
+      <main className="col-span-9">
         <PosterGrid items={filteredAndSortedItems} />
       </main>
-      <aside className="col-span-3 flex flex-col gap-6">
+      <aside className="col-span-3 flex flex-col gap-6 sticky top-5 self-start">
         <ItemsSearch searchValue={searchQuery} setSearchValue={setSearchQuery} />
         <ItemsSort
           sortValue={sortValue}
@@ -57,6 +59,7 @@ export function RepoViewer(props: RepoViewerProps): React.JSX.Element {
           reverseValue={reverseValue}
           setReverseValue={setReverseValue}
         />
+        <RepoInfo repository={repository} />
       </aside>
     </div>
   )

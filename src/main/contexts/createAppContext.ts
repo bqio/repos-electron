@@ -28,9 +28,9 @@ export async function createAppContext(WebTorrentClass: typeof WebTorrent): Prom
   const version = await getVersion()
   const mainWindow = new BrowserWindow({
     title: `Repos ${version}`,
-    width: 1200,
+    width: 1280,
     height: 720,
-    minWidth: 1200,
+    minWidth: 1280,
     minHeight: 720,
     show: false,
     autoHideMenuBar: true,

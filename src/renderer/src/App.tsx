@@ -11,6 +11,7 @@ import { useSettingsStore } from '@renderer/stores/settings'
 import { useEffect } from 'react'
 import { Toaster } from '@renderer/components/ui/sonner'
 import { useRepoStore } from '@renderer/stores/repo'
+import { PhotoProvider } from 'react-photo-view'
 
 function App(): React.JSX.Element {
   const initSettings = useSettingsStore((s) => s.init)
@@ -22,18 +23,20 @@ function App(): React.JSX.Element {
   }, [initSettings, initRepos])
   return (
     <TooltipProvider>
-      <SidebarProvider defaultOpen={false}>
-        <AppSidebar />
-        <SidebarInset>
-          <Routes>
-            <Route path="/" element={<RepoPage />} />
-            <Route path="/favorites" element={<FavoritesPage />} />
-            <Route path="/downloads" element={<DownloadsPage />} />
-            <Route path="/settings" element={<SettingsPage />} />
-          </Routes>
-        </SidebarInset>
-      </SidebarProvider>
-      <Toaster />
+      <PhotoProvider>
+        <SidebarProvider defaultOpen={false}>
+          <AppSidebar />
+          <SidebarInset>
+            <Routes>
+              <Route path="/" element={<RepoPage />} />
+              <Route path="/favorites" element={<FavoritesPage />} />
+              <Route path="/downloads" element={<DownloadsPage />} />
+              <Route path="/settings" element={<SettingsPage />} />
+            </Routes>
+          </SidebarInset>
+        </SidebarProvider>
+        <Toaster closeButton={true} />
+      </PhotoProvider>
     </TooltipProvider>
   )
 }

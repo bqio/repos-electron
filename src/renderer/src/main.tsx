@@ -1,3 +1,4 @@
+import 'react-photo-view/dist/react-photo-view.css'
 import './index.css'
 
 import { createRoot } from 'react-dom/client'

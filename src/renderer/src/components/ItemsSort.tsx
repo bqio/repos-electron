@@ -1,11 +1,5 @@
 import { Button } from '@renderer/components/ui/button'
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent
-} from '@renderer/components/ui/card'
+import { Card, CardHeader, CardTitle, CardContent } from '@renderer/components/ui/card'
 import {
   Select,
   SelectTrigger,
@@ -33,7 +27,6 @@ export function ItemsSort({
     <Card>
       <CardHeader>
         <CardTitle>Сортировка</CardTitle>
-        <CardDescription>Сортируй что нужно</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="flex gap-2">

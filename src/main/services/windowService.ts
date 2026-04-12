@@ -5,7 +5,7 @@ export class WindowService {
   constructor(private ctx: AppContext) {}
 
   send(channel: string, payload: any) {
-    if (!this.ctx.mainWindow.webContents.isDestroyed()) {
+    if (this.ctx.mainWindow && !this.ctx.mainWindow.isDestroyed()) {
       this.ctx.mainWindow.webContents.send(channel, payload)
     }
   }

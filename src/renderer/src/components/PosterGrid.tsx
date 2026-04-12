@@ -10,6 +10,7 @@ import { RepositoryItem } from '@shared/types'
 import { toast } from 'sonner'
 import { ipc } from '@shared/vars'
 import { getInfoHashFromMagnet } from '@shared/utils'
+import { ItemScreenshots } from '@renderer/components/ItemScreenshots'
 
 interface PosterGridProps {
   items: RepositoryItem[]
@@ -85,7 +86,7 @@ const PosterItem = memo(
 PosterItem.displayName = 'PosterItem'
 
 // Мемоизированный компонент InfoRow
-const InfoRow = memo(
+export const InfoRow = memo(
   ({ icon: Icon, label, value }: { icon: any; label: string; value: string | number }) => (
     <div className="flex items-start gap-3 py-2">
       <Icon className="w-4 h-4 text-muted-foreground mt-0.5 shrink-0" />
@@ -114,7 +115,7 @@ export function PosterGrid({ items }: PosterGridProps) {
   const handleItemDownloadClick = useCallback(
     (item: RepositoryItem): void => {
       setDialogOpen(false)
-      toast.success(`Downloading ${item.title}...`)
+      toast.success(`Downloading ${item.title}...`, { icon: <Download size="sm" /> })
       renderer.send(ipc.torrentAdd, item.magnetURI)
     },
     [renderer]
@@ -193,7 +194,7 @@ export function PosterGrid({ items }: PosterGridProps) {
 
   return (
     <>
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(130px,1fr))] gap-6">
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(136px,1fr))] gap-6">
         {displayedItems.map((item) => (
           <PosterItem
             key={getInfoHashFromMagnet(item.magnetURI)}
@@ -220,6 +221,12 @@ export function PosterGrid({ items }: PosterGridProps) {
             className="min-w-3xl p-0"
             onCloseAutoFocus={(e) => e.preventDefault()}
             onOpenAutoFocus={(e) => e.preventDefault()}
+            onPointerDownOutside={(e) => {
+              const target = e.target as HTMLElement
+              if (target.closest('[data-slot="dialog-overlay"]')) {
+                e.preventDefault()
+              }
+            }}
           >
             <div className="grid grid-cols-12">
               <div className="bg-muted/30 p-8 flex items-center justify-center col-span-4">
@@ -259,6 +266,12 @@ export function PosterGrid({ items }: PosterGridProps) {
                     />
                   )}
                 </div>
+
+                {selectedItem.screenshots && (
+                  <div onClick={(e) => e.stopPropagation()}>
+                    <ItemScreenshots urls={selectedItem.screenshots} />
+                  </div>
+                )}
 
                 <div className="flex justify-end mt-auto">
                   <ButtonGroup>

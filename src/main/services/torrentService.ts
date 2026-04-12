@@ -60,7 +60,8 @@ export class TorrentService {
       console.log('[TORRENT_SERVICE]', 'Download to:', downloadPath)
 
       const torrent = this.ctx.client.add(magnetURI, {
-        path: downloadPath
+        path: downloadPath,
+        private: true
       })
 
       torrent.on('infoHash', () => {

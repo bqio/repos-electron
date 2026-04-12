@@ -33,7 +33,8 @@ export default function ImportRepoDialog() {
     magnetURI: z.string().min(1, 'Magnet URI cannot be empty'),
     poster: z.string().min(1, 'Poster cannot be empty'),
     size: z.number().min(1, 'Size cannot be empty'),
-    published_date: z.number().min(1, 'Publication date cannot be empty')
+    published_date: z.number().min(1, 'Publication date cannot be empty'),
+    screenshots: z.optional(z.array(z.string().min(1, 'Screenshots cannot be empty')))
   })
 
   const RepositorySchema = z.object({

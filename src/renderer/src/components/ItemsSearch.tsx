@@ -1,10 +1,4 @@
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent
-} from '@renderer/components/ui/card'
+import { Card, CardHeader, CardTitle, CardContent } from '@renderer/components/ui/card'
 import { Input } from '@renderer/components/ui/input'
 
 interface ItemsSearchProps {
@@ -17,12 +11,11 @@ export function ItemsSearch({ searchValue, setSearchValue }: ItemsSearchProps) {
     <Card>
       <CardHeader>
         <CardTitle>Поиск</CardTitle>
-        <CardDescription>Ищи что нужно</CardDescription>
       </CardHeader>
       <CardContent>
         <Input
           type="text"
-          placeholder={`Что ищем...`}
+          placeholder={`Что ищем?`}
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
           autoFocus

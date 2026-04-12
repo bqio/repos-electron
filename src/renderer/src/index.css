@@ -148,3 +148,19 @@
   border-radius: 9px;
   border: 4px solid var(--sb-track-color);
 }
+
+.PhotoView-Portal {
+  z-index: 100;
+}
+
+.PhotoView-Slider__ArrowLeft {
+  z-index: 100;
+}
+
+.PhotoView-Slider__ArrowRight {
+  z-index: 100;
+}
+
+[data-slot='dialog-overlay'] {
+  z-index: 0;
+}
