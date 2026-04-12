@@ -15,12 +15,16 @@ jobs:
         include:
           - platform: 'macos-latest'
             args: '--target aarch64-apple-darwin'
+            build_command: 'build:mac'
           - platform: 'macos-latest'
             args: '--target x86_64-apple-darwin'
+            build_command: 'build:mac'
           - platform: 'ubuntu-22.04'
             args: ''
+            build_command: 'build:linux'
           - platform: 'windows-latest'
             args: ''
+            build_command: 'build:win'
 
     runs-on: ${{ matrix.platform }}
     steps:
@@ -33,3 +37,6 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+      
+      - name: Build app
+        run: npm run ${{ matrix.build_command }}
