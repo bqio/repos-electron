@@ -1,6 +1,16 @@
-# Repos
+<div align="center">
 
-Repository manager for your purpose
+<a href="https://repos.fun"><img src="resources/icon.png" height="100" alt="logo"/></a>
+
+# Repos [WIP]
+
+**Repository manager for your purpose.**
+
+<a href="https://github.com/bqio/repos/releases">![Github All Releases](https://img.shields.io/github/downloads/bqio/repos/total.svg)</a>
+
+![screenshot](resources/image.png)
+
+</div>
 
 ## Recommended IDE Setup
 
@@ -37,7 +47,7 @@ $ npm run build:linux
 
 ```bash
 $ git add .
-$ git commit -m 'commit_info'
+$ git commit -m 'message'
 $ git push
 $ npm version patch
 $ git push --tags
