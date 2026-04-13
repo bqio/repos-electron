@@ -27,7 +27,7 @@ export async function bootstrapApp(ctx: AppContext) {
     windowService.window.webContents.send('update-available', info)
   })
 
-  autoUpdater.on('update-not-available', (info) => {
+  autoUpdater.on('update-not-available', () => {
     console.log('У вас последняя версия')
     windowService.window.webContents.send('update-status', 'У вас последняя версия')
   })
