@@ -10,12 +10,12 @@ export function ItemsSearch({ searchValue, setSearchValue }: ItemsSearchProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Поиск</CardTitle>
+        <CardTitle>Search</CardTitle>
       </CardHeader>
       <CardContent>
         <Input
           type="text"
-          placeholder={`Что ищем?`}
+          placeholder={`Enter item title...`}
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
           autoFocus

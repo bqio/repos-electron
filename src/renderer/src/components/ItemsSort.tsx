@@ -26,7 +26,7 @@ export function ItemsSort({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Сортировка</CardTitle>
+        <CardTitle>Sort</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="flex gap-2">
@@ -36,9 +36,9 @@ export function ItemsSort({
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                <SelectItem value="date">Дата публикации</SelectItem>
-                <SelectItem value="size">Размер</SelectItem>
-                <SelectItem value="title">Название</SelectItem>
+                <SelectItem value="date">Published Date</SelectItem>
+                <SelectItem value="size">Size</SelectItem>
+                <SelectItem value="title">Title</SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>
