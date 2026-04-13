@@ -67,6 +67,16 @@ export class StorageService {
     })
   }
 
+  async dropRepo(name: string, version: string) {
+    await this.storage.update((data) => {
+      const filteredRepositories = data.repositories.filter(
+        (repository) => repository.name !== name && repository.version !== version
+      )
+      data.repositories = filteredRepositories
+      data.repository = filteredRepositories.length === 0 ? null : filteredRepositories[0].id
+    })
+  }
+
   async pushRepo(repo: Repository) {
     await this.storage.update((data) => {
       data.repositories.push(repo)

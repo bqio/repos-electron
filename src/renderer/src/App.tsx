@@ -22,22 +22,24 @@ function App(): React.JSX.Element {
     initRepos()
   }, [initSettings, initRepos])
   return (
-    <TooltipProvider>
-      <PhotoProvider>
-        <SidebarProvider defaultOpen={false}>
-          <AppSidebar />
-          <SidebarInset>
-            <Routes>
-              <Route path="/" element={<RepoPage />} />
-              <Route path="/favorites" element={<FavoritesPage />} />
-              <Route path="/downloads" element={<DownloadsPage />} />
-              <Route path="/settings" element={<SettingsPage />} />
-            </Routes>
-          </SidebarInset>
-        </SidebarProvider>
-        <Toaster closeButton={true} />
-      </PhotoProvider>
-    </TooltipProvider>
+    <>
+      <TooltipProvider>
+        <PhotoProvider>
+          <SidebarProvider defaultOpen={false}>
+            <AppSidebar />
+            <SidebarInset>
+              <Routes>
+                <Route path="/" element={<RepoPage />} />
+                <Route path="/favorites" element={<FavoritesPage />} />
+                <Route path="/downloads" element={<DownloadsPage />} />
+                <Route path="/settings" element={<SettingsPage />} />
+              </Routes>
+            </SidebarInset>
+          </SidebarProvider>
+          <Toaster closeButton={true} />
+        </PhotoProvider>
+      </TooltipProvider>
+    </>
   )
 }
 

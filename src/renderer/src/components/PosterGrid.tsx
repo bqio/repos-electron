@@ -11,6 +11,7 @@ import { toast } from 'sonner'
 import { ipc } from '@shared/vars'
 import { getInfoHashFromMagnet } from '@shared/utils'
 import { ItemScreenshots } from '@renderer/components/ItemScreenshots'
+import { useNavigate } from 'react-router'
 
 interface PosterGridProps {
   items: RepositoryItem[]
@@ -104,6 +105,7 @@ InfoRow.displayName = 'InfoRow'
 
 // Основной компонент
 export function PosterGrid({ items }: PosterGridProps) {
+  const navigate = useNavigate()
   const [displayedItems, setDisplayedItems] = useState<RepositoryItem[]>([])
   const [page, setPage] = useState(1)
   const [selectedItem, setSelectedItem] = useState<RepositoryItem | null>(null)
@@ -117,6 +119,7 @@ export function PosterGrid({ items }: PosterGridProps) {
       setDialogOpen(false)
       toast.success(`Downloading ${item.title}...`, { icon: <Download size="sm" /> })
       renderer.send(ipc.torrentAdd, item.magnetURI)
+      navigate('/downloads')
     },
     [renderer]
   )
@@ -223,7 +226,15 @@ export function PosterGrid({ items }: PosterGridProps) {
             onOpenAutoFocus={(e) => e.preventDefault()}
             onPointerDownOutside={(e) => {
               const target = e.target as HTMLElement
-              if (target.closest('[data-slot="dialog-overlay"]')) {
+              if (
+                target.closest('.PhotoView-Portal') ||
+                target.closest('.PhotoView-Slider') ||
+                target.closest('.PhotoView__Photo') ||
+                target.closest('.PhotoView-Slider__ArrowLeft') ||
+                target.closest('.PhotoView-Slider__ArrowRight') ||
+                target.closest('.PhotoView-Slider__toolbarIcon') ||
+                target.closest('[class*="PhotoView"]')
+              ) {
                 e.preventDefault()
               }
             }}

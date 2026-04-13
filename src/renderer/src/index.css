@@ -150,17 +150,10 @@
 }
 
 .PhotoView-Portal {
-  z-index: 100;
+  z-index: 9999 !important;
+  pointer-events: auto !important;
 }
 
-.PhotoView-Slider__ArrowLeft {
-  z-index: 100;
-}
-
-.PhotoView-Slider__ArrowRight {
-  z-index: 100;
-}
-
-[data-slot='dialog-overlay'] {
-  z-index: 0;
+.PhotoView-Portal * {
+  pointer-events: auto !important;
 }

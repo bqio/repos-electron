@@ -31,7 +31,8 @@ export const useRepoStore = create<RepoStore>((set, get) => ({
     }))
     window.electron.ipcRenderer.send(ipc.storagePushRepo, repository)
   },
-  removeRepo: (name: string, version: string) =>
+  removeRepo: (name: string, version: string) => {
+    window.electron.ipcRenderer.send(ipc.storageDropRepo, name, version)
     set((state) => {
       const filteredRepositories = state.repositories.filter(
         (repository) => repository.name !== name && repository.version !== version
@@ -40,7 +41,8 @@ export const useRepoStore = create<RepoStore>((set, get) => ({
         repositories: filteredRepositories,
         repository: filteredRepositories.length === 0 ? null : filteredRepositories[0].id
       }
-    }),
+    })
+  },
   init: async () => {
     const repos: Repository[] = await window.electron.ipcRenderer.invoke(ipc.storageGetRepos)
     const repoId: string | null = await window.electron.ipcRenderer.invoke(ipc.storageGetRepo)

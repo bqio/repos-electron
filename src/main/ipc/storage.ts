@@ -24,6 +24,10 @@ export function registerStorageIpc(storage: StorageService) {
     await storage.pushRepo(repo)
   })
 
+  ipcMain.on(ipc.storageDropRepo, async (_, name: string, version: string) => {
+    await storage.dropRepo(name, version)
+  })
+
   ipcMain.on(ipc.storageSetRepo, async (_, id: string) => {
     storage.setRepo(id)
   })
