@@ -1,6 +1,6 @@
 {
   "name": "repos",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "description": "Repository manager for your purpose",
   "main": "./out/main/index.js",
   "author": "bqio",
