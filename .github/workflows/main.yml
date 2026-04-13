@@ -28,6 +28,20 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
+      - name: Install Linux dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libgbm-dev \
+            libgtk-3-dev \
+            libnss3-dev \
+            libxss-dev \
+            libasound2-dev \
+            libxtst-dev \
+            libx11-xcb-dev \
+            libxkbfile-dev
+
       - name: Install dependencies
         run: npm ci
 
