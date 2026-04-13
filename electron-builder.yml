@@ -2,6 +2,7 @@ appId: fun.repos.app
 productName: Repos
 directories:
   buildResources: build
+  output: release
 files:
   - '!**/.vscode/*'
   - '!src/*'
@@ -10,6 +11,7 @@ files:
   - '!{.env,.env.*,.npmrc,pnpm-lock.yaml}'
   - '!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}'
   - '!{components.json,package-lock.json}'
+  - '!out/**/*'
 asarUnpack:
   - resources/**
 win:
@@ -19,6 +21,8 @@ nsis:
   shortcutName: ${productName}
   uninstallDisplayName: ${productName}
   createDesktopShortcut: always
+  oneClick: false
+  perMachine: false
 mac:
   entitlementsInherit: build/entitlements.mac.plist
   extendInfo:
@@ -30,6 +34,7 @@ mac:
   target:
     - dmg
     - zip
+  icon: build/icon.icns
 dmg:
   artifactName: ${name}-${version}.${ext}
 linux:
@@ -39,13 +44,12 @@ linux:
     - deb
   maintainer: electronjs.org
   category: Utility
+  icon: build/icon.png
 appImage:
   artifactName: ${name}-${version}.${ext}
 npmRebuild: false
-
 publish:
   provider: github
   owner: bqio
   repo: repos-electron
   releaseType: release
-  private: false
