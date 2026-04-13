@@ -5,6 +5,7 @@ import { UpdateService } from '@main/services/updateService'
 import { WindowService } from '@main/services/windowService'
 import { AppContext } from '@shared/types'
 import { shell } from 'electron'
+import { autoUpdater } from 'electron-updater'
 import { join } from 'node:path'
 
 export async function bootstrapApp(ctx: AppContext) {
@@ -12,6 +13,45 @@ export async function bootstrapApp(ctx: AppContext) {
   const torrentService = new TorrentService(ctx, storageService)
   const windowService = new WindowService(ctx)
   const updateService = new UpdateService(torrentService, windowService)
+
+  // auto updates
+  autoUpdater.checkForUpdatesAndNotify()
+
+  autoUpdater.on('checking-for-update', () => {
+    console.log('Проверка обновлений...')
+    windowService.window.webContents.send('update-status', 'Проверка обновлений...')
+  })
+
+  autoUpdater.on('update-available', (info) => {
+    console.log('Доступно обновление:', info.version)
+    windowService.window.webContents.send('update-available', info)
+  })
+
+  autoUpdater.on('update-not-available', (info) => {
+    console.log('У вас последняя версия')
+    windowService.window.webContents.send('update-status', 'У вас последняя версия')
+  })
+
+  autoUpdater.on('error', (err) => {
+    console.error('Ошибка обновления:', err)
+    windowService.window.webContents.send('update-error', err.message)
+  })
+
+  autoUpdater.on('download-progress', (progressObj) => {
+    let percent = progressObj.percent.toFixed(2)
+    console.log(`Скачивание: ${percent}%`)
+    windowService.window.webContents.send('download-progress', progressObj)
+  })
+
+  autoUpdater.on('update-downloaded', (info) => {
+    console.log('Обновление скачано, будет установлено при перезапуске')
+    windowService.window.webContents.send('update-downloaded', info)
+
+    // Автоматическая установка через 5 секунд
+    setTimeout(() => {
+      autoUpdater.quitAndInstall()
+    }, 5000)
+  })
 
   // Window events
   windowService.window.on('ready-to-show', () => windowService.window.show())

@@ -10,7 +10,7 @@ export function ItemScreenshots(props: ItemScreenshotsProps): React.JSX.Element 
 
   return (
     <div className="my-6 grid grid-cols-3 gap-4">
-      {screenshots.map((screenshot) => {
+      {screenshots.slice(0, 3).map((screenshot) => {
         const id = v4()
         return <ScreenshotImage src={screenshot} alt={id} key={id} />
       })}
