@@ -20,37 +20,36 @@ export async function bootstrapApp(ctx: AppContext) {
   // auto updates
   autoUpdater.checkForUpdatesAndNotify()
 
-  autoUpdater.on('checking-for-update', () => {
-    console.log('Проверка обновлений...')
-    windowService.window.webContents.send('update-status', 'Проверка обновлений...')
-  })
+  // autoUpdater.on('checking-for-update', () => {
+  //   console.log('Проверка обновлений...')
+  //   //windowService.window.webContents.send('update-status', 'Проверка обновлений...')
+  // })
 
-  autoUpdater.on('update-available', (info) => {
-    console.log('Доступно обновление:', info.version)
-    windowService.window.webContents.send('update-available', info)
-  })
+  // autoUpdater.on('update-available', (info) => {
+  //   console.log('Доступно обновление:', info.version)
+  //   //windowService.window.webContents.send('update-available', info)
+  // })
 
-  autoUpdater.on('update-not-available', () => {
-    console.log('У вас последняя версия')
-    windowService.window.webContents.send('update-status', 'У вас последняя версия')
-  })
+  // autoUpdater.on('update-not-available', () => {
+  //   console.log('У вас последняя версия')
+  //   //windowService.window.webContents.send('update-status', 'У вас последняя версия')
+  // })
 
-  autoUpdater.on('error', (err) => {
-    console.error('Ошибка обновления:', err)
-    windowService.window.webContents.send('update-error', err.message)
-  })
+  // autoUpdater.on('error', (err) => {
+  //   console.error('Ошибка обновления:', err)
+  //   //windowService.window.webContents.send('update-error', err.message)
+  // })
 
-  autoUpdater.on('download-progress', (progressObj) => {
-    let percent = progressObj.percent.toFixed(2)
-    console.log(`Скачивание: ${percent}%`)
-    windowService.window.webContents.send('download-progress', progressObj)
-  })
+  // autoUpdater.on('download-progress', (progressObj) => {
+  //   let percent = progressObj.percent.toFixed(2)
+  //   console.log(`Скачивание: ${percent}%`)
+  //   //windowService.window.webContents.send('download-progress', progressObj)
+  // })
 
-  autoUpdater.on('update-downloaded', (info) => {
-    console.log('Обновление скачано, будет установлено при перезапуске')
-    windowService.window.webContents.send('update-downloaded', info)
+  autoUpdater.on('update-downloaded', () => {
+    //console.log('Обновление скачано, будет установлено при перезапуске')
+    //windowService.window.webContents.send('update-downloaded', info)
 
-    // Автоматическая установка через 5 секунд
     setTimeout(() => {
       autoUpdater.quitAndInstall()
     }, 5000)

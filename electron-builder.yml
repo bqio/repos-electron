@@ -49,5 +49,5 @@ npmRebuild: false
 publish:
   provider: github
   owner: bqio
-  repo: repos-electron
+  repo: repos
   releaseType: release
