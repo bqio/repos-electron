@@ -7,6 +7,9 @@ import { AppContext } from '@shared/types'
 import { shell } from 'electron'
 import { autoUpdater } from 'electron-updater'
 import { join } from 'node:path'
+import log from 'electron-log'
+
+autoUpdater.logger = log
 
 export async function bootstrapApp(ctx: AppContext) {
   const storageService = await StorageService.create()
