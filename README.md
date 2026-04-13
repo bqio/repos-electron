@@ -32,3 +32,13 @@ $ npm run build:mac
 # For Linux
 $ npm run build:linux
 ```
+
+### Publish
+
+```bash
+$ git add .
+$ git commit -m 'commit_info'
+$ git push
+$ npm version patch
+$ git push --tags
+```

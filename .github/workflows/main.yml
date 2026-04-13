@@ -30,5 +30,5 @@ jobs:
 
       - name: Build and publish
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_RELEASES_TOKEN }}
         run: npm run release
